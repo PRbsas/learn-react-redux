@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <div id="root">nothing rendered yet</div>
+  <script src='https://unpkg.com/react@15.3.0/dist/react.min.js'></script>
+  <script src='https://unpkg.com/react-dom@15.3.0/dist/react-dom.min.js'></script>
+  <script>
+    var { div, h1, ul, li } = React.DOM
+
+    var FavoriteShow = React.createClass({
+      getInitialState() {
+        return {
+          fontWeightState: 'bold'
+        }
+      },
+      toggleFontWeight() {
+        var fontWeightState = (this.state.fontWeightState === 'bold') ? 'normal' : 'bold'
+        this.setState({fontWeightState})
+      },
+      render() {
+        return (
+          li(
+            {
+              onClick: this.toggleFontWeight,
+              style: {
+                fontWeight: this.state.fontWeightState,
+                color: this.props.titleColor
+              }
+            },
+            this.props.titleName
+          )
+        )
+      }
+    })
+
+    var markupExample = (
+      div({},
+        h1({}, 'My Favorite Shows'),
+        ul({},
+          React.createElement(FavoriteShow, {titleColor: 'red', titleName: 'Person of Interest'}),
+          React.createElement(FavoriteShow, {titleColor: 'orange', titleName: 'Stranger Things'}),
+          React.createElement(FavoriteShow, {titleColor: 'gold', titleName: 'Lost'})
+        )
+      )
+    )
+
+
+    ReactDOM.render(
+      markupExample,
+      document.getElementById('root')
+    );
+  </script>
+</body>
+</html>
