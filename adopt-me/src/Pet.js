@@ -2,6 +2,10 @@ import React from 'react';
 const MAX_DESCRIPTION_LENGTH = 150
 
 const Pet = React.createClass({
+  handleFavoriteChange() {
+    console.log(this.props.pet)
+    this.props.toggleFavorite(this.props.pet, !this.props.favorite)
+  },
   render() {
     const photos = this.props.pet.media ? this.props.pet.media.photos.photo.reduce((acc, photo) => {
       if(photo['@size'] === 'pn') {
@@ -12,6 +16,8 @@ const Pet = React.createClass({
     const description = this.props.pet.description || ''
     return (
       <div className='pet'>
+      <input type='checkbox' checked={this.props.favorite} onChange={this.handleFavoriteChange} />
+
         <div>
           {photos.map((photo, index) => (
             <img key={photo} alt={`${this.props.pet.name} number ${index+1}`} src={photo} />
